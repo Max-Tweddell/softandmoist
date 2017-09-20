@@ -23,7 +23,7 @@
 
  ;; the event handler
  (fn [{:keys [db local-storage-cart-items]} _]
-   {:db (assoc default-db :cart-items local-storage-cart-items)}))
+   {:db (assoc db/default-db :cart-items local-storage-cart-items)}))
 
 (reg-event-db
  :set-active-page
@@ -34,7 +34,7 @@
  :add-item
  cart-item-interceptors
  (fn [cart-items [item]]
-   (let (id (allocate-next-id cart-items))
+   (let [id (allocate-next-id cart-items)]
      (assoc cart-items id {:id id :item item :quantity 1}))))
 
 (reg-event-db

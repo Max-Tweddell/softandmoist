@@ -8,6 +8,7 @@
             [ajax.core :refer [GET POST]]
             [bug.ajax :refer [load-interceptors!]]
             [bug.views]
+            [bug.subs]
             [bug.events])
   (:import goog.History))
 
@@ -46,9 +47,9 @@
              {:__html (md->html docs)}}]])])
 
 (def pages
-  {:home #'home-page
+  {:home (var bug.views/home-page)
    :cart (var bug.views/cart-item)
-   :about #'about-page})
+   :about (var bug.views/about-page)})
 
 (defn page []
   [:div
