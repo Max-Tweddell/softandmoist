@@ -7,6 +7,7 @@
             [markdown.core :refer [md->html]]
             [ajax.core :refer [GET POST]]
             [bug.ajax :refer [load-interceptors!]]
+            [bug.views]
             [bug.events])
   (:import goog.History))
 
@@ -28,7 +29,8 @@
       [:a.navbar-brand {:href "#/"} "bug"]
       [:ul.nav.navbar-nav
        [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+       [nav-link "#/about" "About" :about collapsed?]
+       [nav-link "#/cart" "Cart" :cart collapsed?]]]]))
 
 (defn about-page []
   [:div.container
@@ -45,6 +47,7 @@
 
 (def pages
   {:home #'home-page
+   :cart (var bug.views/cart-item)
    :about #'about-page})
 
 (defn page []
@@ -58,7 +61,8 @@
 
 (secretary/defroute "/" []
   (rf/dispatch [:set-active-page :home]))
-
+(secretary/defroute "/cart" []
+  (rf/dispatch [:set-active-page :cart]))
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
 
